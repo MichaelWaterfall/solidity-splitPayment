@@ -77,8 +77,8 @@ const initializeContract  = () => {
 };
 
 const initializeApp = () => {
-    const $toInput = document.getElementById("toInput");
-    const $amountInput = document.getElementById("amountInput");
+    let $toInput = document.getElementById("toInput");
+    let $amountInput = document.getElementById("amountInput");
     const $button = document.getElementById("button");
 
     let accounts = [];
@@ -88,20 +88,24 @@ const initializeApp = () => {
             accounts = _accounts;
         });
     
-    const toInput = $toInput.innerHTML;
-    const amountInput = $amountInput.innerHTML;
-
+    //const toInput = $toInput.value;
+    //const amountInput = $amountInput.value;
+    
    $button.addEventListener('click', (e) => {
         e.preventDefault();
         console.log("test");
+        let toInput = $toInput.value;
+        let amountInput = $amountInput.value;
+        console.log(toInput);
+        console.log(amountInput);
         splitPaymentContract.methods
         .send(toInput, amountInput)
-        .send({from: accounts[0]})
+        .send({from: accounts[0], value: amountInput})
         .then(result => {
             console.log(result);
         })
         .catch(error => {
-            console.log(error.message);
+            console.log(error);
         })
    })
 
